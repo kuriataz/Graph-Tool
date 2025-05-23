@@ -1,0 +1,32 @@
+Graphs are undirected and unweighted.
+Vertices are distinguished by id.
+The structure is represented by adjacency lists.
+Adjacency list of the vertex is its field.
+Adjacency list is a list of neighbours' ids.
+
+
+Format of the input file:
+
+5 4
+1 2
+2 3
+3 4
+4 5
+
+First line: number of vertices number of edges.
+Next lines: pairs of adjacent vertices.
+
+
+TODO:
+1. Input / output.
+2. Creating adjacency lists.
+3. Finding connected components.
+4. Finding diamaters of the components.
+5. Min / Max degree.
+6. Statistics of deegres.
+7. Clustering coefficients.
+8. Statistics of distances between vertices.
+
+
+
+
