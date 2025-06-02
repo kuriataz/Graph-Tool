@@ -1,5 +1,5 @@
 Graphs are undirected and unweighted.
-Vertices are distinguished by id.
+Vertices are distinguished by id; ids are positive natural Ints.
 The structure is represented by adjacency lists.
 Adjacency list of the vertex is its field.
 Adjacency list is a list of neighbours' ids.
@@ -7,13 +7,13 @@ Adjacency list is a list of neighbours' ids.
 
 Format of the input file:
 
-5 4
+5
 1 2
 2 3
 3 4
 4 5
 
-First line: number of vertices number of edges.
+First line: number of vertices
 Next lines: pairs of adjacent vertices.
 
 
