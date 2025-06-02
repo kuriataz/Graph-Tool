@@ -1,8 +1,9 @@
 -- na razie tak, żeby było prościej pracować nad resztą rzeczy; na koniec można poszukać szybszej wersji (ta zbyt wymagająca dla dużych grafów gęstych)
 
-module BuildGraphs (buildGraph) where
+module BuildGraphs (buildGraphStandard,buildGraphLight) where
 
 import qualified Data.Map.Strict as Map
+import Data.List
 
 -- graf -> do wyrzucenia do osobnego pliku na koniec
 type Graph = Map.Map Int [Int]
@@ -36,8 +37,20 @@ buildAdjLists n ((i,li):rest) ((e,f):edges) = if e==f then buildAdjLists n ((i,l
                                             else buildAdjLists n ((i,li):rest) edges
 
 
+buildAdjListsLight _ [] _ = []
+buildAdjListsLight _ lists [] = lists
+buildAdjListsLight n ((i,li):rest) ((e,f):edges) = if e==f then buildAdjListsLight n ((i,li):rest) edges
+                                                    else if i==e then if f>0 && f<=n then buildAdjListsLight n ((i,(li++[f])):rest) edges
+                                                                        else buildAdjListsLight n ((i,li):rest) edges
+                                                    else if e>i then (i,(sort li)):(buildAdjListsLight n rest ((e,f):edges))
+                                                    else buildAdjListsLight n ((i,li):rest) edges
+
+
 -----------------------------------------------------------------------------------------
 
 
-buildGraph n edges = if n<=0 then Map.fromList []
+buildGraphStandard n edges = if n<=0 then Map.fromList []
                     else Map.fromList (buildAdjLists n [(i,[]) | i <- [1..n]] (sortEdgeList (addReverses edges)))
+
+buildGraphLight n edges = if n<=0 then Map.fromList []      -- for first-coordinate-sorted edge lists - NEEDS BOTH (a,b) and (b,a) to be part of the list
+                    else Map.fromList (buildAdjListsLight n [(i,[]) | i <- [1..n]] edges)
