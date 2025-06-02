@@ -30,13 +30,11 @@ test2 2 = buildGraphLight 5 [(i,j) | i <- [1..5], j <- [1..5]]    -- C5
 test2 3 = buildGraphLight 5 [(i,j) | i <- [1..7], j <- [1..7]]    -- still C5, edges containing vertices with id>5 should be removed by the function
 
 
--- te dwa testy poniżej do dokończenia!!!
-
-test2 4 = buildGraphLight 100 [(2*i+k,2*j+k) | i <- [1..50], j <- [1..50], k<- [0,1]]
+test2 4 = buildGraphLight 100 [(i,j) | i <- [1..100], j <- [1..100], (mod i 2)==(mod j 2)]
 -- should create K50,50, where one group contans all odd ids and the second group contains all even ids (all ids are <=100)
 
 
-test2 5 = buildGraphLight 10000 [(2*i+k,2*j+k) | i <- [1..5000], j <- [1..5000], k<- [0,1]]
--- should create 5000,5000, where one group contans all odd ids and the second group contains all even ids (all ids are <=10000) - tests creation of big graphs
-
 test2 _ = error"Nieznany numer testu"
+
+{-- budowanie dużych grafów gęstych jest bardzo długie, bo baaaardzo dużo krawędzi
+dodam konstruktory np. Cn, Km,n itp., żeby można było szybko je generować dla testów itp. --}
