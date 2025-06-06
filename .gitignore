@@ -2,4 +2,4 @@
 *.o
 TestDegrees
 TestComponents
-dist-newstyle
+GraphAnalysisTest

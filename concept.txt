@@ -18,14 +18,18 @@ Next lines: pairs of adjacent vertices.
 
 
 TODO:
-1. Input / output.
-2. Creating adjacency lists.
-3. Finding connected components.
-4. Finding diamaters of the components.
-5. Min / Max degree.
-6. Statistics of deegres.
-7. Clustering coefficients.
-8. Statistics of distances between vertices.
+1. Input / output. (R)
+2. Creating adjacency lists. (R)
+3. Finding connected components. (Z)
+4. Finding diamaters of the components. (Z)
+5. Min / Max degree. (Z)
+6. Statistics of deegres. (Z)
+7. Clustering coefficients. (R?)
+8. Statistics of distances between vertices. (Z)
+9. Put it all together. (R?)
+10. More tests. (R?)
+11. README. (Z)
+
 
 
 

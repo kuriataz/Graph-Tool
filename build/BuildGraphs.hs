@@ -8,7 +8,7 @@ import Data.List
 -- graf -> do wyrzucenia do osobnego pliku na koniec
 type Graph = Map.Map Int [Int]
 
--- helping functions; they'reused only by other functions which check whether the arguments are correct
+-- helping functions; they're used only by other functions which check whether the arguments are correct
 addReverses edges = edges++(map (\(e,f) -> (f,e)) edges)
 
 partition2 _ _ [] = ([],[],[])

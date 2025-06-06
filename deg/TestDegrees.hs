@@ -40,6 +40,7 @@ main = do
   putStrLn "TestGraph 1:"
   let degrees1 = vertexDegrees testGraph1
       (maxDeg1, minDeg1, hist1) = degreeStats testGraph1
+  putStrLn $ "Graph: " ++ show testGraph1
   putStrLn $ "Degrees: " ++ show degrees1
   putStrLn $ "Max: " ++ show maxDeg1
   putStrLn $ "Min: " ++ show minDeg1
