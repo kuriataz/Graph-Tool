@@ -18,6 +18,7 @@ module GraphAnalysis
   , sumGraphs
   , buildEmptyGraph
   , buildPetersenGraph
+  , buildGraphFromFile
   ) where
 
 import qualified Data.Map.Strict as Map
@@ -29,7 +30,6 @@ import BuildGraphs
 
 -- | Graph representation as an adjacency map, where the key is a vertex
 -- and the value is a list of its neighbors.
-type Graph = Map.Map Int [Int]
 
 -- | Computes degrees of all vertices
 -- Returns a map where key = vertex value = degree.

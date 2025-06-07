@@ -1,4 +1,4 @@
-module BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph,buildGraphFromFile) where
+module BuildGraphs (Graph,buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph,buildGraphFromFile) where
 
 import qualified Data.Map.Strict as Map
 import Data.List as List
