@@ -25,7 +25,7 @@ import qualified Data.Set as Set
 import qualified Data.Sequence as Seq
 import Data.Maybe (fromMaybe)
 import Data.List (foldl')
-import BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph)
+import BuildGraphs
 
 -- | Graph representation as an adjacency map, where the key is a vertex
 -- and the value is a list of its neighbors.
