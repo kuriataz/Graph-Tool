@@ -1,10 +1,23 @@
-module BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph) where
+module BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph,buildGraphFromFile) where
 
 import qualified Data.Map.Strict as Map
 import Data.List as List
+import Text.Read as Read
 
 -- graf -> do wyrzucenia do osobnego pliku na koniec
 type Graph = Map.Map Int [Int]
+
+readAsInt :: String -> Int
+readAsInt text = let mbRead = Read.readMaybe text in
+                    case mbRead of
+                        Just n -> n
+                        Nothing -> 0    --will get auto-deleted later
+
+getEdgesFromString [] = []
+getEdgesFromString (e:edges) = let  vPair = (words e)++["0","0"]    --for security in case of incorrect data
+                                    a = readAsInt (head vPair)
+                                    b = readAsInt (head (tail vPair))
+                                in (a,b):(getEdgesFromString edges)
 
 
 addEdge (a,b) = (Map.adjust (b:) a).(Map.adjust (a:) b)
@@ -29,7 +42,6 @@ insertNVerts gr n = if n<1 then gr
 
 insertEdges gr edges = let n=Map.size gr in
                         correction (insertions gr (filter (\(a,b) -> a/=b && a>0 && b>0 && a<=n && b<=n) edges))
-
 
 
 -- constructors of special types of graphs
@@ -61,3 +73,12 @@ sumGraphs isStrict graphs = foldr (sum2Graphs isStrict) (Map.fromList []) graphs
 buildEmptyGraph = buildKn 0
 
 buildPetersenGraph = insertEdges (sum2Graphs True (buildCn 5) (buildCn 5)) [(1,6),(2,9),(3,7),(4,10),(5,8)]
+
+
+buildGraphFromFile filePath = do
+    content <- readFile(filePath)
+    let linesList = lines content
+        n = readAsInt (head linesList)
+        edges = getEdgesFromString (tail linesList)
+        gr = buildGraph n edges
+    return gr
