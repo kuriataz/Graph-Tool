@@ -18,7 +18,7 @@ Next lines: pairs of adjacent vertices.
 
 
 TODO:
-1. Input / output. (R)
+1. Input / output. (R)      # na końcu, jak już reszta będzie - i tak będzie wykorzystywać zrobione dla normalnych intów funkcje, w konstrukcji 'do'
 2. Creating adjacency lists. (R)
 3. Finding connected components. (Z)
 4. Finding diamaters of the components. (Z)

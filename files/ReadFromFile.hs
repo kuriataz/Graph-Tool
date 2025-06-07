@@ -12,4 +12,4 @@ dataFromFile pth = do
     return fileLines
 
 
--- Zaczęte, na razie zostawione do czasu ustalenia co zrobićz tym, że trzeba trzymać IO
+-- Zaczęte, na razie zostawione do czasu ustalenia co zrobić z tym, że trzeba trzymać IO
