@@ -38,12 +38,13 @@ insertEdges gr edges = let n=Map.size gr in
 buildKn n = Map.fromList([(i,[j | j <- [1..n], j/=i]) | i <- [1..n]])
 
 buildKmn m n = if m<=0 || n<0 then Map.fromList []
-                else Map.fromList([(i,[j | j <- [1..m], j/=i]) | i <- [1..m]]++[(i,[j | j <- [m+1..m+n], j/=i]) | i <- [m+1..m+n]])
+                else Map.fromList([(i,[j | j <- [m+1..m+n]]) | i <- [1..m]]++[(i,[j | j <- [1..m]]) | i <- [m+1..m+n]])
 
 buildCn n = if n<=0 then Map.fromList []
             else if n==1 then Map.fromList [(1,[])]
             else if n==2 then Map.fromList [(1,[2]),(2,[1])]
             else Map.fromList(((1,[2,n]):[(i,[(i-1),(i+1)]) | i <- [2..n-1]])++[(n,[1,(n-1)])])
+
 
 sum2Graphs isStrict g1 g2 = let n=Map.size g1
                                 m=Map.size g2
@@ -54,3 +55,9 @@ sum2Graphs isStrict g1 g2 = let n=Map.size g1
 
 sumGraphs _ [] = Map.fromList []
 sumGraphs isStrict graphs = foldr (sum2Graphs isStrict) (Map.fromList []) graphs
+
+
+
+buildEmptyGraph = buildKn 0
+
+buildPetersenGraph = insertEdges (sum2Graphs True (buildCn 5) (buildCn 5)) [(1,6),(2,9),(3,7),(4,10),(5,8)]
