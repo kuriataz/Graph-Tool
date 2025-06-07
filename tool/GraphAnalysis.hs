@@ -7,6 +7,17 @@ module GraphAnalysis
   , findComponents
   , componentDiameters
   , distanceStats
+  , buildGraph
+  , insertVert
+  , insertNVerts
+  , insertEdges
+  , buildKn
+  , buildKmn
+  , buildCn
+  , sum2Graphs
+  , sumGraphs
+  , buildEmptyGraph
+  , buildPetersenGraph
   ) where
 
 import qualified Data.Map.Strict as Map
@@ -14,6 +25,7 @@ import qualified Data.Set as Set
 import qualified Data.Sequence as Seq
 import Data.Maybe (fromMaybe)
 import Data.List (foldl')
+import BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph)
 
 -- | Graph representation as an adjacency map, where the key is a vertex
 -- and the value is a list of its neighbors.

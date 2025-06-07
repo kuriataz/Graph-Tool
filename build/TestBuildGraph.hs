@@ -1,5 +1,5 @@
 import qualified Data.Map.Strict as Map
-import BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs)
+import BuildGraphs (buildGraph,insertVert,insertNVerts,insertEdges,buildKn,buildKmn,buildCn,sum2Graphs,sumGraphs,buildEmptyGraph,buildPetersenGraph)
 
 test 1 = buildGraph 0 [(1,3),(8,1),(0,1)] -- should be empty
 
