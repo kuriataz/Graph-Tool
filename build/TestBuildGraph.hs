@@ -27,9 +27,9 @@ testKmn = take 3 (Map.toList(buildKmn 2 100000))
 
 testCn = take 10 (Map.toList(buildCn 1000000))
 
-testSum2 = sum2Graphs (buildCn 10) (buildKn 5)
+testSum2 isStrict = sum2Graphs isStrict (buildCn 10) (buildKn 5)
 
-testSum = sumGraphs [(buildCn n) | n <- [1..10]]
+testSum isStrict = sumGraphs isStrict [(buildCn n) | n <- [1..10]]
 
 
 testVert = insertVert (buildKn 5) -- should be K5 + isolated vertex with id 6

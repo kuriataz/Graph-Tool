@@ -13,6 +13,9 @@ insertions gr edges = List.foldr addEdge gr edges
 
 correction gr = Map.map (nub.sort) gr
 
+liftIds gr m = if m<=0 then gr
+                else Map.mapKeys (+m) (Map.map (map (+m)) gr)   -- adds m to all vertices ids and all values in adj. lists
+
 
 -----------------------------------------------------------------------------------------
 
@@ -42,13 +45,12 @@ buildCn n = if n<=0 then Map.fromList []
             else if n==2 then Map.fromList [(1,[2]),(2,[1])]
             else Map.fromList(((1,[2,n]):[(i,[(i-1),(i+1)]) | i <- [2..n-1]])++[(n,[1,(n-1)])])
 
-sum2Graphs g1 g2 = let  l1 = (Map.toList g1)
-                        l2 = (Map.toList g2) 
-                        n = (length l1) in
-                    Map.fromList(l1++(map (\(a,b) -> (a+n,(map (+n) b))) l2))
+sum2Graphs isStrict g1 g2 = let n=Map.size g1
+                                m=Map.size g2
+                            in if isStrict then Map.union g1 (liftIds g2 n) --strict order of graph parts
+                                else if(n<=m) then Map.union g2 (liftIds g1 m)    -- updating ids in smaller graph is often faster (unless it has much more edges)
+                                    else Map.union g1 (liftIds g2 n)            -- Map.union is faster when the 1st object is bigger
 
 
-sumGraphs [] = Map.fromList []
-sumGraphs [g] = g
-sumGraphs [g1,g2] = sum2Graphs g1 g2
-sumGraphs (g:gs) = sum2Graphs g (sumGraphs gs)
+sumGraphs _ [] = Map.fromList []
+sumGraphs isStrict graphs = foldr (sum2Graphs isStrict) (Map.fromList []) graphs
