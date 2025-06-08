@@ -19,6 +19,8 @@ module GraphAnalysis
   , buildEmptyGraph
   , buildPetersenGraph
   , buildGraphFromFile
+  , toIO
+  , printGraph
   ) where
 
 import qualified Data.Map.Strict as Map
@@ -27,6 +29,7 @@ import qualified Data.Sequence as Seq
 import Data.Maybe (fromMaybe)
 import Data.List (foldl')
 import BuildGraphs
+import IOInteractions
 
 -- | Graph representation as an adjacency map, where the key is a vertex
 -- and the value is a list of its neighbors.
