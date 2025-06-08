@@ -24,6 +24,9 @@ module GraphAnalysis
   , printIOGraph
   , writeGraphToFile
   , writeIOGraphToFile
+  , isEmptyGraph
+  , vertCount
+  , edgeCount
   ) where
 
 import qualified Data.Map.Strict as Map
