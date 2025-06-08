@@ -16,3 +16,7 @@ testComponents = toIO findComponents graphFromTests
 testComponentDiam = toIO componentDiameters graphFromTests
 
 testDistanceStats = toIO distanceStats graphFromTests
+
+testPrint = printGraph (buildKmn 5 8)
+
+testIOPrint = printIOGraph graphFromTests

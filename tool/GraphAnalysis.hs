@@ -21,6 +21,7 @@ module GraphAnalysis
   , buildGraphFromFile
   , toIO
   , printGraph
+  , printIOGraph
   ) where
 
 import qualified Data.Map.Strict as Map

@@ -1,4 +1,4 @@
-module IOInteractions(printGraph,buildGraphFromFile,toIO) where
+module IOInteractions(buildGraphFromFile,printGraph,printIOGraph,toIO) where
 
 import qualified Data.Map.Strict as Map
 import Data.List as List
@@ -21,10 +21,9 @@ getEdgesFromString (e:edges) = let  vPair = (words e)++["0","0"]    --for securi
                                 in (a,b):(getEdgesFromString edges)
 
 
--------------------------------------------------------------
+toPrintStr gr = Map.foldrWithKey (\key val str -> show(key)++": "++show(val)++"\n"++str) "" gr
 
---na razie to jedno nie działa
-printGraph gr = putStr (Map.foldrWithKey (\key val str -> str++show(key)++": "++show(val)++"\n") "" gr)
+-------------------------------------------------------------
 
 buildGraphFromFile :: String -> IO(Graph)
 buildGraphFromFile filePath = do
@@ -35,6 +34,12 @@ buildGraphFromFile filePath = do
         gr = buildGraph n edges
     return gr
 
+
+printGraph gr = putStr (toPrintStr gr)
+
+printIOGraph ioGraph = do
+    strGr <- toIO toPrintStr ioGraph
+    putStr strGr
 
 
 toIO func ioGraph = do
