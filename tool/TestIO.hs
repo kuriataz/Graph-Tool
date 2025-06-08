@@ -20,3 +20,7 @@ testDistanceStats = toIO distanceStats graphFromTests
 testPrint = printGraph (buildKmn 5 8)
 
 testIOPrint = printIOGraph graphFromTests
+
+testWrite = writeGraphToFile "result.txt" (buildKmn 5 10)
+
+testIOWrite = writeIOGraphToFile "resultIO.txt" graphFromTests
