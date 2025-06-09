@@ -8,15 +8,11 @@ type Graph = Map.Map Int [Int]
 
 -- helping functions; used only by other functions and not shared outside the module
 
--- adds an edge to the graph (vertices values validated by the calling function)
--- uses built-in function Map.adjust
-addEdge :: (Int,Int) -> (Graph -> Graph)
-addEdge (a,b) = (Map.adjust (b:) a).(Map.adjust (a:) b)
 
 -- inserts edges from the list to the graph (vertices values validated by the calling function)
--- uses function addEdge and built-in List.foldr
+-- uses built-in functions Map.adjust and List.foldl'
 insertions :: Graph -> [(Int,Int)] -> Graph
-insertions gr edges = List.foldr addEdge gr edges
+insertions gr edges = List.foldl' (\g (a,b) -> (Map.adjust (b:) a (Map.adjust (a:) b g))) gr edges
 
 -- sorts all the adjacency lists of the graph and removes dupliacted values
 -- uses bulit-in functions nub and sort
