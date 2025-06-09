@@ -17,7 +17,7 @@ insertions gr edges = List.foldl' (\g (a,b) -> (Map.adjust (b:) a (Map.adjust (a
 -- sorts all the adjacency lists of the graph and removes dupliacted values
 -- uses bulit-in functions nub and sort
 correction :: Graph -> Graph
-correction gr = Map.map (nub.sort) gr
+correction gr = Map.map (sort.nub) gr
 
 -- adds m to all the vertices ids (including ids from the adjacency lists)
 -- uses built-in functions Map.mapKeys, Map.map and map
