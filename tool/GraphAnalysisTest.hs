@@ -82,6 +82,43 @@ testDistanceStats =
     p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
     isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
 
+
+-- | Tests for clusteringCoefficient
+testClusteringCoefficient :: [TestResult]
+testClusteringCoefficient =
+  [ runTest "clusteringCoefficient: K3 vertex 1" $
+      abs (clusteringCoefficient k3 1 - 1.0) < 1e-10,
+    runTest "clusteringCoefficient: P3 vertex 2" $
+      abs (clusteringCoefficient p3 2 - 0.0) < 1e-10,
+    runTest "clusteringCoefficient: isolated vertex 3" $
+      abs (clusteringCoefficient isolated 3 - 0.0) < 1e-10,
+    runTest "clusteringCoefficient: cycle C4 vertex 1" $
+      abs (clusteringCoefficient c4 1 - 0.0) < 1e-10
+  ]
+  where
+    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
+    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
+    isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
+    c4 = Map.fromList [(1, [2, 4]), (2, [1, 3]), (3, [2, 4]), (4, [1, 3])]
+
+-- | Tests for globalClusteringCoefficient
+testGlobalClusteringCoefficient :: [TestResult]
+testGlobalClusteringCoefficient =
+  [ runTest "globalClusteringCoefficient: K3" $
+      abs (globalClusteringCoefficient k3 - 1.0) < 1e-10,
+    runTest "globalClusteringCoefficient: P3" $
+      abs (globalClusteringCoefficient p3 - 0.0) < 1e-10,
+    runTest "globalClusteringCoefficient: empty graph" $
+      abs (globalClusteringCoefficient empty - 0.0) < 1e-10,
+    runTest "globalClusteringCoefficient: cycle C4" $
+      abs (globalClusteringCoefficient c4 - 0.0) < 1e-10
+  ]
+  where
+    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
+    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
+    empty = Map.empty
+    c4 = Map.fromList [(1, [2, 4]), (2, [1, 3]), (3, [2, 4]), (4, [1, 3])]
+
 -- | Run tests and show results
 main :: IO ()
 main = do
@@ -91,6 +128,8 @@ main = do
         , testFindComponents
         , testComponentDiameters
         , testDistanceStats
+        , testClusteringCoefficient
+        , testGlobalClusteringCoefficient
         ]
       passed = length [ () | Pass <- allTests ]
       failed = [ name | Fail name <- allTests ]

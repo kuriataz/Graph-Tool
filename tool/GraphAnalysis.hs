@@ -7,6 +7,8 @@ module GraphAnalysis
   , findComponents
   , componentDiameters
   , distanceStats
+  , clusteringCoefficient
+  , globalClusteringCoefficient
   , buildGraph
   , insertVert
   , insertNVerts
@@ -33,12 +35,13 @@ import qualified Data.Map.Strict as Map
 import qualified Data.Set as Set
 import qualified Data.Sequence as Seq
 import Data.Maybe (fromMaybe)
-import Data.List (foldl')
+import Data.List (foldl', tails)
 import BuildGraphs
 import IOInteractions
 
 -- | Graph representation as an adjacency map, where the key is a vertex
 -- and the value is a list of its neighbors.
+-- type Graph = Map.Map Int [Int]
 
 -- | Computes degrees of all vertices
 -- Returns a map where key = vertex value = degree.
@@ -142,3 +145,29 @@ distanceHistogram graph component =
         , dist > 0
         ]
   in Map.fromListWith (+) [(dist, 1) | dist <- allDistances]
+
+-- | Computes the clustering coefficient for a single vertex.
+-- The clustering coefficient is the ratio of the number of edges between
+-- the neighbors of a vertex to the maximum possible number of such edges.
+clusteringCoefficient :: Graph -> Int -> Double
+clusteringCoefficient graph v =
+  let neighbors = fromMaybe [] (Map.lookup v graph)
+      k = length neighbors
+  in if k < 2 then 0.0
+     else
+       let edgeCount = sum [if Set.member u (Set.fromList (fromMaybe [] (Map.lookup w graph))) then 1 else 0
+                           | (u, w) <- pairs neighbors, u < w]
+           maxEdges = k * (k - 1) `div` 2
+       in fromIntegral edgeCount / fromIntegral maxEdges
+  where
+    pairs xs = [(x, y) | (x:ys) <- tails xs, y <- ys]
+
+-- | Computes the global clustering coefficient for the graph.
+-- This is the average of the clustering coefficients of all vertices.
+globalClusteringCoefficient :: Graph -> Double
+globalClusteringCoefficient graph
+  | Map.null graph = 0.0
+  | otherwise =
+      let coefficients = map (clusteringCoefficient graph) (Map.keys graph)
+          n = length coefficients
+      in sum coefficients / fromIntegral n
