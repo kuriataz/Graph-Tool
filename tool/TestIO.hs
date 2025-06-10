@@ -17,6 +17,10 @@ testComponentDiam = toIO componentDiameters graphFromTests
 
 testDistanceStats = toIO distanceStats graphFromTests
 
+testClusteringCoefficient = toIO clusteringCoefficient graphFromTests
+
+testGlobalClusteringCoefficient = toIO globalClusteringCoefficient graphFromTests
+
 testPrint = printGraph (buildKmn 5 8)
 
 testIOPrint = printIOGraph graphFromTests
