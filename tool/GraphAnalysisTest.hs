@@ -7,7 +7,6 @@ import Data.List (sort)
 import Control.Monad (when, unless)
 import Data.Bifunctor (first)
 
-
 -- | Type for test result
 data TestResult = Pass | Fail String deriving (Show)
 
@@ -15,6 +14,15 @@ data TestResult = Pass | Fail String deriving (Show)
 runTest :: String -> Bool -> TestResult
 runTest name True = Pass
 runTest name False = Fail name
+
+-- | Test cases for graph analysis functions
+k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
+isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
+mixed = Map.fromList [(1, [2, 3]), (2, [1]), (3, [1]), (4, [])]
+disconnected = Map.fromList [(1, [2]), (2, [1]), (3, [4]), (4, [3]), (5, [])]
+p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
+c4 = Map.fromList [(1, [2, 4]), (2, [1, 3]), (3, [2, 4]), (4, [1, 3])]
+empty = Map.empty
 
 -- | Tests for vertexDegrees
 testVertexDegrees :: [TestResult]
@@ -24,9 +32,6 @@ testVertexDegrees =
     runTest "vertexDegrees: isolated vertex" $
       vertexDegrees isolated == Map.fromList [(1, 1), (2, 1), (3, 0)]
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
 
 -- | Tests for degreeStats
 testDegreeStats :: [TestResult]
@@ -36,9 +41,6 @@ testDegreeStats =
     runTest "degreeStats: different degrees" $
       degreeStats mixed == (2, 0, Map.fromList [(0, 1), (1, 2), (2, 1)])
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    mixed = Map.fromList [(1, [2, 3]), (2, [1]), (3, [1]), (4, [])]
 
 -- | Tests for findComponents
 testFindComponents :: [TestResult]
@@ -48,9 +50,6 @@ testFindComponents =
     runTest "findComponents: disconnected" $
       sort (map sort (findComponents disconnected)) == [[1, 2], [3, 4], [5]]
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    disconnected = Map.fromList [(1, [2]), (2, [1]), (3, [4]), (4, [3]), (5, [])]
 
 -- | Tests for componentDiameters
 testComponentDiameters :: [TestResult]
@@ -62,10 +61,6 @@ testComponentDiameters =
     runTest "componentDiameters: disconnected" $
       sort (map (first sort) (componentDiameters disconnected)) == [([1, 2], 1), ([3, 4], 1), ([5], 0)]
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
-    disconnected = Map.fromList [(1, [2]), (2, [1]), (3, [4]), (4, [3]), (5, [])]
 
 -- | Tests for distanceStats
 testDistanceStats :: [TestResult]
@@ -77,11 +72,6 @@ testDistanceStats =
     runTest "distanceStats: isolated vertex" $
       sort (map (first sort) (distanceStats isolated)) == [([1, 2], Map.fromList [(1, 2)]), ([3], Map.empty)]
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
-    isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
-
 
 -- | Tests for clusteringCoefficient
 testClusteringCoefficient :: [TestResult]
@@ -95,11 +85,6 @@ testClusteringCoefficient =
     runTest "clusteringCoefficient: cycle C4 vertex 1" $
       abs (clusteringCoefficient c4 1 - 0.0) < 1e-10
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
-    isolated = Map.fromList [(1, [2]), (2, [1]), (3, [])]
-    c4 = Map.fromList [(1, [2, 4]), (2, [1, 3]), (3, [2, 4]), (4, [1, 3])]
 
 -- | Tests for globalClusteringCoefficient
 testGlobalClusteringCoefficient :: [TestResult]
@@ -113,11 +98,6 @@ testGlobalClusteringCoefficient =
     runTest "globalClusteringCoefficient: cycle C4" $
       abs (globalClusteringCoefficient c4 - 0.0) < 1e-10
   ]
-  where
-    k3 = Map.fromList [(1, [2, 3]), (2, [1, 3]), (3, [1, 2])]
-    p3 = Map.fromList [(1, [2]), (2, [1, 3]), (3, [2])]
-    empty = Map.empty
-    c4 = Map.fromList [(1, [2, 4]), (2, [1, 3]), (3, [2, 4]), (4, [1, 3])]
 
 -- | Run tests and show results
 main :: IO ()
